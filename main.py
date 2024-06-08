@@ -7,13 +7,27 @@ from langchain.agents import Tool
 from langchain_openai import ChatOpenAI
 import os
 import re
+import streamlit as st
+import os
+from langchain_google_genai import ChatGoogleGenerativeAI
+from crewai import Agent, Task, Crew, Process
+from langchain_community.tools import DuckDuckGoSearchRun
+from langchain.agents import Tool
+from langchain.agents import load_tools
+from crewai_tools import tool
+from langchain_groq import ChatGroq
 
-# NOTE: to find which model names you have, use cli tool:  `ollama list`
-llm = ChatOpenAI(
-      model='llama2',
-      base_url="http://localhost:11434/v1",
-      api_key="NA"
-    )
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GROQ_API_KEY = os.getenv("groq_api_key")
+#Set gemini pro as llm
+llm = ChatGoogleGenerativeAI(model="gemini-pro",
+                            verbose = True,
+                            temperature = 0.8,
+                            google_api_key=GOOGLE_API_KEY)
 
 duckduckgo_search = DuckDuckGoSearchRun()
 
